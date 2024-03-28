@@ -30,7 +30,7 @@ export default function Login({ status, canResetPassword }) {
     <GuestLayout>
       <Head title="Log in" />
 
-      {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+      {status && <div className="mb-4 font-medium text-sm">{status}</div>}
 
       <form onSubmit={submit}>
         <div>
@@ -52,23 +52,28 @@ export default function Login({ status, canResetPassword }) {
         <div className="block mt-4">
           <label className="flex items-center">
             <Checkbox name="remember" checked={data.remember} onChange={(e) => setData("remember", e.target.checked)} />
-            <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">Remember me</span>
+            <span className="ms-2 text-sm text-gray-600">Remember me</span>
           </label>
         </div>
 
-        <div className="flex items-center justify-end mt-4">
-          {canResetPassword && (
-            <Link
-              href={route("password.request")}
-              className="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
-            >
-              Forgot your password?
+        <div className="flex mt-4 justify-between">
+          <div className="flex items-center justify-start">
+            <Link href={route("register")} className="underline text-sm text-gray-400">
+              Register here
             </Link>
-          )}
+          </div>
 
-          <PrimaryButton className="ms-4" disabled={processing}>
-            Log in
-          </PrimaryButton>
+          <div className="flex items-center justify-end">
+            {canResetPassword && (
+              <Link href={route("password.request")} className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2">
+                Forgot your password?
+              </Link>
+            )}
+
+            <PrimaryButton className="ms-4" disabled={processing}>
+              Log in
+            </PrimaryButton>
+          </div>
         </div>
       </form>
     </GuestLayout>

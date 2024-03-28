@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\SellingItem;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
 
 class SellingItemsController extends Controller
 {
@@ -13,8 +15,12 @@ class SellingItemsController extends Controller
     {
         $items = SellingItem::all();
 
-        return Inertia::render('Items/Index', [
-            'items' => $items,
+        return Inertia::render('Home', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'laravelVersion' => Application::VERSION,
+            'phpVersion' => PHP_VERSION,
+            'items' => $items
         ]);
     }
 

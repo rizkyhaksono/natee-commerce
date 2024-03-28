@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('selling_items', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->integer('quantity');
-            $table->integer('price');
+            $table->decimal('price', 8, 2);
+            $table->unsignedBigInteger('buyer_id')->nullable();
+            $table->foreign('buyer_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }
