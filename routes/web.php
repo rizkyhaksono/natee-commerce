@@ -20,6 +20,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/explore', function () {
         return Inertia::render('Explore');
     })->name('explore');
+
+    Route::get('checkout', function () {
+        return Inertia::render('Checkout');
+    })->name('checkout');
 });
 
 Route::middleware('auth')->group(function () {

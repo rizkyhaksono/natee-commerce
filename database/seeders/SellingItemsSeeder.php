@@ -29,6 +29,30 @@ class SellingItemsSeeder extends Seeder
             'price' => 25.00,
             'buyer_id' => $this->getRandomUserId(),
         ]);
+
+        SellingItem::create([
+            'title' => 'Amazon Prime Video subscription',
+            'description' => 'Unlimited streaming of movies and TV shows.',
+            'quantity' => 8,
+            'price' => 40.00,
+            'buyer_id' => $this->getRandomUserId(),
+        ]);
+
+        SellingItem::create([
+            'title' => 'Apple Music Family subscription',
+            'description' => 'Listen to ad-free music with your family.',
+            'quantity' => 12,
+            'price' => 60.00,
+            'buyer_id' => $this->getRandomUserId(),
+        ]);
+
+        SellingItem::create([
+            'title' => 'Disney+ Hotstar VIP 1-year subscription',
+            'description' => 'Access to exclusive Hotstar content and live sports.',
+            'quantity' => 15,
+            'price' => 70.00,
+            'buyer_id' => $this->getRandomUserId(),
+        ]);
     }
 
     private function getRandomUserId()

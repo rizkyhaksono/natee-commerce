@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react"
+import CheckoutBox from "./Checkoutbox"
 
 export default function Navbar({ auth }) {
   return (
@@ -6,9 +7,12 @@ export default function Navbar({ auth }) {
       {auth.user ? (
         <div className="flex items-center container mx-auto justify-between">
           <img src="illustration.png" className="w-14 h-14" />
-          <Link href={route("dashboard")} className="rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-black focus:outline-none">
-            Dashboard
-          </Link>
+          <div className="flex items-center">
+            <CheckoutBox />
+            <Link href={route("dashboard")} className="rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-black focus:outline-none">
+              Dashboard
+            </Link>
+          </div>
         </div>
       ) : (
         <div className="container mx-auto flex justify-between items-center">
