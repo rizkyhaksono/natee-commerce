@@ -18,11 +18,11 @@ export default function Home({ auth, laravelVersion, items }) {
   return (
     <>
       <Head title="Home" />
-      <div className="bg-gray-50 text-black/80">
+      <div className="bg-gray-100 text-black/80">
         <Navbar auth={auth} />
-        <ul className="container mx-auto px-10 py-10 grid xl:grid-cols-3 gap-4">
+        <ul className="max-w-7xl mx-auto px-10 py-10 grid xl:grid-cols-3 gap-4">
           {items.map((item) => (
-            <li key={item.id} className="bg-gray-100/50 my-3 p-5 rounded-xl hover:bg-gray-100 hover:shadow-lg transition duration-200" onClick={() => handleItemClick(item.id)}>
+            <li key={item.id} className="bg-white my-3 p-5 rounded-xl hover:shadow-lg transition duration-200" onClick={() => handleItemClick(item.id)}>
               <p className="text-lg font-extrabold px-2 py-1">{item.title}</p>
               <p className="text-sm px-2 py-1">{item.description}</p>
               <p className="mt-5 px-2 py-1">{item.quantity} Items</p>

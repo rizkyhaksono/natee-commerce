@@ -58,7 +58,7 @@ export default function Login({ status, canResetPassword }) {
 
         <div className="flex mt-4 justify-between">
           <div className="flex items-center justify-start">
-            <Link href={route("register")} className="underline text-sm text-gray-400">
+            <Link href={route("register")} className="underline text-sm text-gray-600">
               Register here
             </Link>
           </div>
