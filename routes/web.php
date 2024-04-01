@@ -17,11 +17,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ]);
     })->name('dashboard');
 
-    Route::get('/explore', function () {
-        return Inertia::render('Explore');
-    })->name('explore');
-
-    Route::get('checkout', function () {
+    Route::get('/checkout', function () {
         return Inertia::render('Checkout');
     })->name('checkout');
 });
