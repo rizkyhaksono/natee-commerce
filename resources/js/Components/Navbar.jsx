@@ -54,7 +54,7 @@ export default function Navbar({ auth }) {
           </div>
         </div>
       ) : (
-        <div className="max-w-6xl px-4 mx-auto flex justify-between items-center">
+        <div className="max-w-6xl py-1 px-4 mx-auto flex justify-between items-center">
           <Link href={route("home")}>
             <img src="illustration.png" className="w-14 h-14" />
           </Link>
