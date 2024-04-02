@@ -24,6 +24,11 @@ class SellingItemsController extends Controller
         ]);
     }
 
+    public function checkout()
+    {
+        return Inertia::render('Checkout');
+    }
+
     public function create()
     {
         return Inertia::render('Items/Create');
@@ -31,17 +36,18 @@ class SellingItemsController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'quantity' => 'required|integer',
-            'price' => 'required|numeric',
-        ]);
+        $items = $request->input('items');
 
-        SellingItem::create($validatedData);
+        foreach ($items as $item) {
+            SellingItem::create([
+                'title' => $item['title'],
+                'description' => $item['description'],
+                'quantity' => $item['quantity'],
+                'price' => $item['price'],
+            ]);
+        }
 
-        return redirect()->route('items.index')
-            ->with('success', 'Item created successfully.');
+        return response()->json(['message' => 'Items stored successfully'], 200);
     }
 
     public function edit(SellingItem $item)

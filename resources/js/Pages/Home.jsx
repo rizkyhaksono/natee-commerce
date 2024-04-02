@@ -59,20 +59,29 @@ export default function Home({ auth, laravelVersion, items }) {
         <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
           {auth.user ? (
             selectedItem && (
-              <div>
-                <p>
+              <div className="px-6 py-4 text-center">
+                <p className="text-lg font-semibold">
                   {selectedItem.title} - Rp. {selectedItem.price}
                 </p>
-                <button onClick={() => handleRemoveItem(selectedItem.id)}>
-                  <span className="bg-red-400 ml-2 rounded-lg px-2 py-1">Remove</span>
-                </button>
-                <button onClick={handleSaveToLocal}>
-                  <span className="bg-green-400 ml-2 rounded-lg px-2 py-1">Save to Local Storage</span>
-                </button>
+                <div className="flex justify-evenly mt-4 gap-10">
+                  <button className="bg-green-400 py-1 w-full rounded-xl text-white hover:bg-green-600 duration-200 transition" onClick={handleSaveToLocal}>
+                    Add to Cart
+                  </button>
+                  <button className="bg-red-400 py-1 w-full rounded-xl text-white hover:bg-red-600 duration-200 transition" onClick={() => setIsModalOpen(false)}>
+                    Close
+                  </button>
+                </div>
               </div>
             )
           ) : (
-            <div className="flex justify-center items-center px-6 py-4 w-full">You are not logged in yet</div>
+            <div className="flex flex-col text-center items-start px-6 py-4 w-full">
+              <div className="">
+                You are not logged in yet. <span className="underline decoration-1 underline-offset-2">Register or login first, so you can buy these item</span>
+              </div>
+              <button className="bg-red-400 px-3 py-1 rounded-xl text-white mt-4 hover:bg-red-600 duration-200 transition" onClick={() => setIsModalOpen(false)}>
+                Close
+              </button>
+            </div>
           )}
         </Modal>
       </div>

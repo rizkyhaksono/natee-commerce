@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link, Head } from "@inertiajs/react"
+import { router } from "@inertiajs/react"
 
 export default function Checkout() {
   const [selectedItems, setSelectedItems] = useState(JSON.parse(localStorage.getItem("selectedItems")) || [])
@@ -8,6 +9,11 @@ export default function Checkout() {
     const updatedItems = selectedItems.filter((_, idx) => idx !== index)
     setSelectedItems(updatedItems)
     localStorage.setItem("selectedItems", JSON.stringify(updatedItems))
+  }
+
+  const handleCheckout = (e) => {
+    e.preventDefault()
+    router.post("/items", { items: selectedItems })
   }
 
   return (
@@ -32,9 +38,9 @@ export default function Checkout() {
         </ul>
         {selectedItems.length === 0 && <p className="text-center mt-8 text-gray-500">No items in your cart.</p>}
         <div className="flex justify-end mt-8">
-          <Link href={route("home")} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
+          <button onClick={handleCheckout} className="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
             Proceed to Checkout
-          </Link>
+          </button>
         </div>
       </div>
     </>

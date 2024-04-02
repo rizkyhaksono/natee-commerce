@@ -10,12 +10,11 @@ export default function Dashboard({ auth, items }) {
 
       <div className="py-12">
         <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-          <div className="sm:rounded-lg flex gap-10">
+          <p className="text-2xl font-semibold">History Order</p>
+          <div className="mt-3 sm:rounded-lg flex gap-10">
             {filteredItems.map((item, index) => (
               <div key={item.id} className="bg-white rounded-xl text-gray-900 px-6 py-4 hover:shadow-lg transition duration-200">
-                <h3>
-                  {++index}. {item.title}
-                </h3>
+                <h3>{item.title}</h3>
                 <p>Price: {item.price}</p>
               </div>
             ))}

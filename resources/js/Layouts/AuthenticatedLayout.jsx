@@ -8,6 +8,7 @@ import { FaCartShopping } from "react-icons/fa6"
 
 export default function Authenticated({ user, children }) {
   const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
+  const [selectedItems, setSelectedItems] = useState(JSON.parse(localStorage.getItem("selectedItems")) || [])
   const { url } = usePage()
 
   return (
@@ -35,6 +36,7 @@ export default function Authenticated({ user, children }) {
             <div className="hidden sm:flex sm:items-center sm:ms-6">
               <Link href={route("checkout")}>
                 <FaCartShopping />
+                {selectedItems && selectedItems.length > 0 && <span className="absolute top-4 ml-2 bg-red-500 text-white px-1 rounded-full text-xs">{selectedItems.length}</span>}
               </Link>
               <div className="ms-3 relative">
                 <Dropdown>

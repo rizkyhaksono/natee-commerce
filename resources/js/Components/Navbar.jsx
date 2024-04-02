@@ -79,7 +79,7 @@ export default function Navbar({ auth }) {
             <Link href={route("login")} className="bg-gray-200 hover:bg-gray-700 rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-white">
               Log in
             </Link>
-            <Link href={route("register")} className="rounded-md px-3 py-2 border-black/40 border ring-1 ring-transparent transition hover:text-black">
+            <Link href={route("register")} className="rounded-md px-3 py-2 border-black/40 border ring-1 ring-transparent transition hover:text-black hover:border-black hover:border-opacity-100">
               Register
             </Link>
           </div>
