@@ -1,11 +1,27 @@
 import { Link } from "@inertiajs/react"
+import Dropdown from "@/Components/Dropdown"
 import { FaCartShopping } from "react-icons/fa6"
 import NavLink from "./NavLink"
 import { usePage } from "@inertiajs/react"
-import Dropdown from "@/Components/Dropdown"
+import { useState, useEffect } from "react"
 
 export default function Navbar({ auth }) {
   const { url } = usePage()
+  const [selectedItems, setSelectedItems] = useState(JSON.parse(localStorage.getItem("selectedItems")) || [])
+
+  useEffect(() => {
+    const handleStorageChange = (event) => {
+      if (event.key === "selectedItems") {
+        setSelectedItems(JSON.parse(event.newValue) || [])
+      }
+    }
+
+    window.addEventListener("storage", handleStorageChange)
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange)
+    }
+  }, [])
 
   return (
     <nav className="bg-white shadow-sm text-black/80 font-bold">
@@ -25,6 +41,7 @@ export default function Navbar({ auth }) {
           <div className="hidden sm:flex sm:items-center sm:ms-6">
             <Link href={route("checkout")}>
               <FaCartShopping />
+              {selectedItems && selectedItems.length > 0 && <span className="absolute top-4 ml-2 bg-red-500 text-white px-1 rounded-full text-xs">{selectedItems.length}</span>}
             </Link>
             <div className="ms-3 relative">
               <Dropdown>
