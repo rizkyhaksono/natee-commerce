@@ -1,13 +1,14 @@
-import { Link } from "@inertiajs/react"
+import { Link, usePage } from "@inertiajs/react"
 import Dropdown from "@/Components/Dropdown"
 import { FaCartShopping } from "react-icons/fa6"
 import NavLink from "./NavLink"
-import { usePage } from "@inertiajs/react"
 import { useState, useEffect } from "react"
+import ResponsiveNavLink from "./ResponsiveNavLink"
 
 export default function Navbar({ auth }) {
-  const { url } = usePage()
+  const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false)
   const [selectedItems, setSelectedItems] = useState(JSON.parse(localStorage.getItem("selectedItems")) || [])
+  const { url } = usePage()
 
   useEffect(() => {
     const handleStorageChange = (event) => {
@@ -24,56 +25,103 @@ export default function Navbar({ auth }) {
   }, [])
 
   return (
-    <nav className="bg-white shadow-sm text-black/80 font-bold">
+    <nav className="bg-white shadow-sm text-black/80 border-b">
       {auth.user ? (
-        <div className="max-w-7xl py-1 px-4 flex items-center mx-auto justify-between sm:px-6 lg:px-8">
-          <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-            <Link href={route("home")}>
-              <img src="illustration.png" className="w-14 h-14" />
-            </Link>
-            <NavLink href={route("home")} active={url == "/"}>
-              Home
-            </NavLink>
-            <NavLink href={route("dashboard")} active={url == "/dashboard"}>
-              Dashboard
-            </NavLink>
-          </div>
-          <div className="hidden sm:flex sm:items-center sm:ms-6">
-            <Link href={route("checkout")}>
-              <FaCartShopping />
-              {selectedItems && selectedItems.length > 0 && <span className="absolute top-4 ml-2 bg-red-500 text-white px-1 rounded-full text-xs">{selectedItems.length}</span>}
-            </Link>
-            <div className="ms-3 relative">
-              <Dropdown>
-                <Dropdown.Trigger>
-                  <span className="inline-flex rounded-md">
-                    <button
-                      type="button"
-                      className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                    >
-                      {auth.user.name}
+        <>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex">
+                <div className="flex items-center justify-center text-gray-800">
+                  <Link href="/">
+                    <img src="illustration.png" className="w-14 h-14" alt="Illustration" />
+                  </Link>
+                </div>
 
-                      <svg className="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                      </svg>
-                    </button>
-                  </span>
-                </Dropdown.Trigger>
+                <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                  <NavLink href={route("home")} active={url == "/"}>
+                    Home
+                  </NavLink>
+                  <NavLink href={route("dashboard")} active={url == "/dashboard"}>
+                    Dashboard
+                  </NavLink>
+                </div>
+              </div>
 
-                <Dropdown.Content>
-                  <Dropdown.Link href={route("profile.edit")}>Profile</Dropdown.Link>
-                  <Dropdown.Link href={route("logout")} method="post" as="button">
-                    Log Out
-                  </Dropdown.Link>
-                </Dropdown.Content>
-              </Dropdown>
+              <div className="hidden sm:flex sm:items-center sm:ms-6">
+                <Link href={route("checkout")}>
+                  <FaCartShopping />
+                  {selectedItems && selectedItems.length > 0 && <span className="absolute top-4 ml-2 bg-red-500 text-white px-1 rounded-full text-xs">{selectedItems.length}</span>}
+                </Link>
+                <div className="ms-3 relative">
+                  <Dropdown>
+                    <Dropdown.Trigger>
+                      <span className="inline-flex rounded-md">
+                        <button
+                          type="button"
+                          className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                        >
+                          {auth.user.name}
+
+                          <svg className="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                          </svg>
+                        </button>
+                      </span>
+                    </Dropdown.Trigger>
+
+                    <Dropdown.Content>
+                      <Dropdown.Link href={route("profile.edit")}>Profile</Dropdown.Link>
+                      <Dropdown.Link href={route("logout")} method="post" as="button">
+                        Log Out
+                      </Dropdown.Link>
+                    </Dropdown.Content>
+                  </Dropdown>
+                </div>
+              </div>
+
+              <div className="-me-2 flex items-center sm:hidden">
+                <button
+                  onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
+                  className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100  focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
+                >
+                  <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                    <path className={!showingNavigationDropdown ? "inline-flex" : "hidden"} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path className={showingNavigationDropdown ? "inline-flex" : "hidden"} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+
+          <div className={(showingNavigationDropdown ? "block" : "hidden") + " sm:hidden"}>
+            <div className="pt-2 pb-3 space-y-1">
+              <ResponsiveNavLink href={route("home")} active={route().current("home")}>
+                Home
+              </ResponsiveNavLink>
+              <ResponsiveNavLink href={route("dashboard")} active={route().current("dashboard")}>
+                Dashboard
+              </ResponsiveNavLink>
+            </div>
+
+            <div className="pt-4 pb-1 border-t border-gray-200">
+              <div className="px-4">
+                <div className="font-medium text-base text-gray-800">{auth.user.name}</div>
+                <div className="font-medium text-sm text-gray-500">{auth.user.email}</div>
+              </div>
+
+              <div className="mt-3 space-y-1">
+                <ResponsiveNavLink href={route("profile.edit")}>Profile</ResponsiveNavLink>
+                <ResponsiveNavLink method="post" href={route("logout")} as="button">
+                  Log Out
+                </ResponsiveNavLink>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="max-w-6xl py-1 px-4 mx-auto flex justify-between items-center">
           <Link href={route("home")}>
-            <img src="illustration.png" className="w-14 h-14" />
+            <img src="illustration.png" className="w-14 h-14" alt="Illustration" />
           </Link>
           <div className="space-x-2">
             <Link href={route("login")} className="bg-gray-200 hover:bg-gray-700 rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-white">

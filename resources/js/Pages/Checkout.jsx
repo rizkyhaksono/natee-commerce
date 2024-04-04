@@ -10,6 +10,7 @@ export default function Checkout() {
   const handleRemoveItem = (index) => {
     setItemIndexToRemove(index)
     setIsModalOpen(true)
+    console.log("Remove index : ", index)
   }
 
   const handleConfirmRemove = () => {
@@ -19,21 +20,18 @@ export default function Checkout() {
     setIsModalOpen(false)
   }
 
-  const handleCancelRemove = () => {
-    setIsModalOpen(false)
-  }
-
   const handleCheckout = (e) => {
     e.preventDefault()
-    router.post("/items", { items: selectedItems })
+    // router.post("/items", { items: selectedItems })
+    console.log("Items checked out:", selectedItems)
   }
 
   return (
     <>
       <Head title="Checkout" />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <Link href={route("dashboard")}>
-          <p className="text-3xl font-bold mb-4">Checkout</p>
+        <Link className="text-3xl font-bold mb-4 w-fit" href={route("dashboard")}>
+          Checkout
         </Link>
         <ul className="space-y-4">
           {selectedItems.map((item, index) => (
@@ -44,8 +42,8 @@ export default function Checkout() {
                   <p className="text-gray-500">Rp. {item.price}</p>
                 </div>
               </div>
-              <button onClick={handleCheckout}>
-                <span className="text-red-500 font-semibold">Remove</span>
+              <button className="text-red-500 font-semibold" onClick={() => handleRemoveItem(index)}>
+                Remove
               </button>
             </li>
           ))}
@@ -57,7 +55,16 @@ export default function Checkout() {
           </button>
         </div>
       </div>
-      {isModalOpen && <Modal title="Remove Item" message="Are you sure you want to remove this item from your cart?" onConfirm={handleConfirmRemove} onCancel={handleCancelRemove} />}
+      <Modal show={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="p-4 text-center">
+          <div>Remove Item</div>
+          <div>Are you sure you want to remove this item from your cart?</div>
+          <div className="flex justify-between px-4">
+            <button>Yes</button>
+            <button>No</button>
+          </div>
+        </div>
+      </Modal>
     </>
   )
 }

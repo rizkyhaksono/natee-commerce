@@ -4,9 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SellingItemsController;
 use App\Http\Controllers\AdminSellingItemsController;
-use App\Models\SellingItem;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [SellingItemsController::class, 'index'])->name('home');
 

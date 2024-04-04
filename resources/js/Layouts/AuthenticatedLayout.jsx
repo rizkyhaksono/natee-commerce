@@ -2,8 +2,7 @@ import { useState } from "react"
 import Dropdown from "@/Components/Dropdown"
 import NavLink from "@/Components/NavLink"
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink"
-import { Link } from "@inertiajs/react"
-import { usePage } from "@inertiajs/react"
+import { Link, usePage } from "@inertiajs/react"
 import { FaCartShopping } from "react-icons/fa6"
 
 export default function Authenticated({ user, children }) {
@@ -19,7 +18,7 @@ export default function Authenticated({ user, children }) {
             <div className="flex">
               <div className="flex items-center justify-center text-gray-800">
                 <Link href="/">
-                  <img src="illustration.png" className="w-14 h-14" />
+                  <img src="illustration.png" className="w-14 h-14" alt="Illustration" />
                 </Link>
               </div>
 
@@ -81,6 +80,9 @@ export default function Authenticated({ user, children }) {
 
         <div className={(showingNavigationDropdown ? "block" : "hidden") + " sm:hidden"}>
           <div className="pt-2 pb-3 space-y-1">
+            <ResponsiveNavLink href={route("home")} active={route().current("home")}>
+              Home
+            </ResponsiveNavLink>
             <ResponsiveNavLink href={route("dashboard")} active={route().current("dashboard")}>
               Dashboard
             </ResponsiveNavLink>
