@@ -1,14 +1,26 @@
 import { useState } from "react"
-import { Link, Head } from "@inertiajs/react"
-import { router } from "@inertiajs/react"
+import { Head, router, Link } from "@inertiajs/react"
+import Modal from "@/Components/Modal"
 
 export default function Checkout() {
   const [selectedItems, setSelectedItems] = useState(JSON.parse(localStorage.getItem("selectedItems")) || [])
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [itemIndexToRemove, setItemIndexToRemove] = useState(null)
 
   const handleRemoveItem = (index) => {
-    const updatedItems = selectedItems.filter((_, idx) => idx !== index)
+    setItemIndexToRemove(index)
+    setIsModalOpen(true)
+  }
+
+  const handleConfirmRemove = () => {
+    const updatedItems = selectedItems.filter((_, idx) => idx !== itemIndexToRemove)
     setSelectedItems(updatedItems)
     localStorage.setItem("selectedItems", JSON.stringify(updatedItems))
+    setIsModalOpen(false)
+  }
+
+  const handleCancelRemove = () => {
+    setIsModalOpen(false)
   }
 
   const handleCheckout = (e) => {
@@ -20,7 +32,9 @@ export default function Checkout() {
     <>
       <Head title="Checkout" />
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <h2 className="text-3xl font-bold mb-4">Checkout</h2>
+        <Link href={route("dashboard")}>
+          <p className="text-3xl font-bold mb-4">Checkout</p>
+        </Link>
         <ul className="space-y-4">
           {selectedItems.map((item, index) => (
             <li key={index} className="flex items-center justify-between bg-white rounded-lg shadow-md p-4">
@@ -30,7 +44,7 @@ export default function Checkout() {
                   <p className="text-gray-500">Rp. {item.price}</p>
                 </div>
               </div>
-              <button onClick={() => handleRemoveItem(index)}>
+              <button onClick={handleCheckout}>
                 <span className="text-red-500 font-semibold">Remove</span>
               </button>
             </li>
@@ -43,6 +57,7 @@ export default function Checkout() {
           </button>
         </div>
       </div>
+      {isModalOpen && <Modal title="Remove Item" message="Are you sure you want to remove this item from your cart?" onConfirm={handleConfirmRemove} onCancel={handleCancelRemove} />}
     </>
   )
 }

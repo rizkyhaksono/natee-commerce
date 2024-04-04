@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SellingItemsController;
 use App\Http\Controllers\AdminSellingItemsController;
 use App\Models\SellingItem;
@@ -19,7 +20,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [SellingItemsController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/checkout', [SellingItemsController::class, 'checkout'])->name('checkout');
     Route::post('/items', [SellingItemsController::class, 'store']);
 });
