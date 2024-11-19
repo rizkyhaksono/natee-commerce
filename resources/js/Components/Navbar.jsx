@@ -120,14 +120,15 @@ export default function Navbar({ auth }) {
         </>
       ) : (
         <div className="max-w-6xl py-1 px-4 mx-auto flex justify-between items-center">
-          <Link href={route("home")}>
+          {/* <Link href={route("home")}> */}
+          <Link href={"/home"}>
             <img src="illustration.png" className="w-14 h-14" alt="Illustration" />
           </Link>
           <div className="space-x-2">
-            <Link href={route("login")} className="bg-gray-200 hover:bg-gray-700 rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-white">
+            <Link href={"/login"} className="bg-gray-200 hover:bg-gray-700 rounded-md px-3 py-2 ring-1 ring-transparent transition hover:text-white">
               Log in
             </Link>
-            <Link href={route("register")} className="rounded-md px-3 py-2 border-black/40 border ring-1 ring-transparent transition hover:text-black hover:border-black hover:border-opacity-100">
+            <Link href={"/register"} className="rounded-md px-3 py-2 border-black/40 border ring-1 ring-transparent transition hover:text-black hover:border-black hover:border-opacity-100">
               Register
             </Link>
           </div>

@@ -24,39 +24,6 @@ class SellingItemsController extends Controller
         ]);
     }
 
-    public function checkout()
-    {
-        return Inertia::render('Checkout');
-    }
-
-    public function create()
-    {
-        return Inertia::render('Items/Create');
-    }
-
-    public function store(Request $request)
-    {
-        $items = $request->input('items');
-
-        foreach ($items as $item) {
-            SellingItem::create([
-                'title' => $item['title'],
-                'description' => $item['description'],
-                'quantity' => $item['quantity'],
-                'price' => $item['price'],
-            ]);
-        }
-
-        return response()->json(['message' => 'Items stored successfully'], 200);
-    }
-
-    public function edit(SellingItem $item)
-    {
-        return Inertia::render('SellingItems/Edit', [
-            'item' => $item,
-        ]);
-    }
-
     public function update(Request $request, SellingItem $item)
     {
         $validatedData = $request->validate([
